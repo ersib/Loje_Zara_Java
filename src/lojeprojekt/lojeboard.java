@@ -44,24 +44,27 @@ public class lojeboard extends JFrame {
 	private JPanel contentPane;
 	
 	private Dice zarat[]=new Dice[5];
-	private int checked[]= new int [] {-1,-1,-1,-1,-1};
-	private JTable table_1;
-	private int nrlojtareve;
 	private Lojtar[] lojtaret;
+	private int nrlojtareve;
+	private JTable table_1;
+	private int checked[]= new int [] {-1,-1,-1,-1,-1}; // do te kontrolloje nese zarat jane selektuar ose jo. Kur dicelbl[1] klikohet atehere
+	// checked[1] merr vleren 1.
+	
+	
 	private int hedhjetZarit=0;
 	private JButton btnRoll;
 	
-	//private int turni=0;
-	private int radha=0;
-	private JLabel[] dicelbl=new JLabel[5];
+	private int radha=0; // perfaqeson indeksin qe do te leviz ne vektorin lojtaret sipas radhes qe ata kane ne cdo nivel
+	private JLabel[] dicelbl=new JLabel[5];// vektori i cili do te mbaje 5 imazhe te zarave
 	private ScoreCell[][] ScoreTable; // Tabela e pikeve per lojen
 	private String[] emrat; // Mban emrat per cdo lojtar
 	private JLabel lblturn; // Tregon radhen e lojtarit emer mbiemer
 	private int niveli=0;  // Variabli qe percakton nivelin e lojes, nga 0 deri ne 12. 13 nivele gjithsej = 13 zgjedhje kategorish
-	private JLabel[] Kateg_lbl=new JLabel[13];
+	private JLabel[] Kateg_lbl=new JLabel[13]; // Ky vektor do te mbaje emrat per 13 kategorite qe mund te zgjidhen
 	
 
 	public lojeboard(Lojtar[] l) {
+		// inicializohet nrlojtareve dhe vektori lojtaret i cili mban te dhenat per cdo lojtar
 		nrlojtareve=l.length;
 		lojtaret=new Lojtar[nrlojtareve];
 		lojtaret=l;
@@ -77,12 +80,12 @@ public class lojeboard extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(5, 5, 961, 699);
-		contentPane = new JPanel();
+		contentPane = new JPanel(); // paneli qe do te mbaje te gjithe komponentet
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel();// paneli qe do te mbaje imazhet e zarave dhe butonin rrotullo
 		panel.setBackground(Color.GREEN);
 		panel.setBounds(24, 11,824, 150);
 		contentPane.add(panel);
@@ -165,13 +168,12 @@ public class lojeboard extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				
-				clearBorders(dicelbl); // heqim kornizat e atyre zarave qe kemi selktuat				
+				clearBorders(dicelbl); // heqim kornizat e atyre zarave qe kemi selktuar				
 				
-				hedhjetZarit++; // kemi kryer nje hedhje
+				hedhjetZarit++; // Inkrementohet nr hedhjeve
 				
-				if(radha==nrlojtareve) {
+				if(radha==nrlojtareve) { // nqs te gjithe lojtaret e kane realizuar radhen e tyre atehere fillojme serish nga i pari
 					radha=0;
-				System.out.println("U be radha zero kur shtypet butoni");
 				}
 				
 							    
@@ -192,7 +194,7 @@ public class lojeboard extends JFrame {
 						checked[i]=-1;
 					 }
 					 
-					 updateTable(radha,zarat);
+					 updateTable(radha,zarat); // funksioni i cili ploteson rezultatin per cdo kategori ne kolonen e lojtarit qe ka radhen
 					 ((AbstractTableModel) table_1.getModel()).fireTableDataChanged();
 					    
 					    if(hedhjetZarit>=3) {
@@ -203,7 +205,7 @@ public class lojeboard extends JFrame {
 					    
 					    int n=JOptionPane.showConfirmDialog(null,"Deshiron ti hedhesh serish zarat ?","Pyetje",JOptionPane.YES_NO_OPTION);
 					    if(JOptionPane.YES_OPTION == n) {     
-					    	// Program will keep going
+					    	// Programi do te vazhdoje
 					    }
 					    else if (JOptionPane.NO_OPTION == n) { // Plotesojme automatikisht nr total te hedhjeve
 					        hedhjetZarit=3;
@@ -257,7 +259,7 @@ public class lojeboard extends JFrame {
 	
 		table_1.setModel(new DefaultTableModel(ScoreTable,emrat) {
 		    @Override
-		    public boolean isCellEditable(int row, int column) {
+		    public boolean isCellEditable(int row, int column) { // ben qelizen e tabeles te paeditueshme
 		       return false;
 		    }
           });
@@ -270,7 +272,7 @@ public class lojeboard extends JFrame {
 		contentPane.add(table_1);
 		
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER ); 
 		for(int z=0;z<nrlojtareve;z++)
 		table_1.getColumnModel().getColumn(z).setCellRenderer( centerRenderer );
 		
